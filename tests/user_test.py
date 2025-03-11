@@ -45,7 +45,7 @@ def test_get_single_user(api_client, base_url, user_data):
 def test_get_nonexistent_user(api_client, base_url):
     """Test getting a user that doesn't exist"""
     with assert_response_time():
-        response = api_client.get(f"{base_url}/users/999")
+        response = api_client.get(f"{base_url}/users/{user_data['id']}")
 
     assert response.status_code == 404
 
@@ -86,7 +86,8 @@ def test_update_user(api_client, base_url, create_user_data):
     updated_data['job'] = "zion resident"
 
     with assert_response_time():
-        response = api_client.put(f"{base_url}/users/2", json=updated_data)
+        response = api_client.put(
+            f"{base_url}/users/{user_data['id']}", json=updated_data)
 
     assert response.status_code == 200
     data = response.json()
@@ -99,7 +100,7 @@ def test_update_user(api_client, base_url, create_user_data):
 def test_delete_user(api_client, base_url):
     """Test deleting a user"""
     with assert_response_time():
-        response = api_client.delete(f"{base_url}/users/2")
+        response = api_client.delete(f"{base_url}/users/{user_data['id']}")
 
     assert response.status_code == 204
 
